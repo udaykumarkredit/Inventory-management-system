@@ -42,18 +42,24 @@ class Supplier(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Manufacturer(models.Model):
-    name = (models.CharField(max_length=100),)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+# class Manufacturer(models.Model):
+#     name = (models.CharField(max_length=100),)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+class StockTypes:
+    IN="Stock In",
+    OUT='Stock Out'
+    
+    choices=(
+        ("IN","Stock In"),
+        ("OUT","Stock Out")
+    )
+    
 
-STOCK_TYPES=(
-    ("IN","Stock In"),
-    ('OUT','Stock Out')
-)
+
 class StockMovement(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    movement_type=models.CharField(max_length=3,choices=STOCK_TYPES)
+    movement_type=models.CharField(max_length=3,choices=StockTypes.choices)
     timestamp=models.DateTimeField(auto_now_add=True)
     quantity=models.PositiveIntegerField()
     reason=models.TextField(blank=True)
