@@ -15,9 +15,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     damaged_products = models.PositiveIntegerField(default=0)
-    manufactured_by = models.ForeignKey(
-        "Manufacturer", on_delete=models.PROTECT, related_name="products"
-    )
+    # manufactured_by = models.ForeignKey(
+    #     "Manufacturer", on_delete=models.PROTECT, related_name="products"
+    # )
     manufactured_date = models.DateField()
     expiry_date = models.DateField(blank=True, null=True)
 
@@ -32,14 +32,22 @@ class Product(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    description=models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
+    contact_person=models.CharField(max_length=100,blank=True)
+    email=models.EmailField(blank=True)
+    phone=models.CharField(max_length=20,blank=True)
+    address=models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.name
 
 
 # class Manufacturer(models.Model):
@@ -55,7 +63,14 @@ class StockTypes:
         ("OUT","Stock Out")
     )
     
-
+class Warehouse(models.Model):
+    name=models.CharField(max_length=100)
+    location=models.CharField(max_length=255)
+    capacity=models.PositiveIntegerField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.name
 
 class StockMovement(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
