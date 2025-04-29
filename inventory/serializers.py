@@ -33,4 +33,7 @@ class WarehouseSerilaizer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-
+class StockMovementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockMovement
+        fields = "__all__"
